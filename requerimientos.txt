@@ -1,0 +1,16 @@
+Sistema de compra y venta FiaOfertas:
+
+Instalar:
+1) Python 2.7
+2) Django 
+3) Postgres 
+   Usuario: usuario
+   Contraseña: admin
+   Base de datos: fiaofertas
+4) Adaptador psycopg2
+5) Librerías: pillow y reportab.
+
+Para entrar al sistema.
+a) Administrador o Superusuario: fiaOferta2017
+   Contraseña: root_2017
+b) Creando un usuario normal.

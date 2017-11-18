@@ -1,0 +1,389 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title> {% block titulo %} {% endblock %} </title>
+	<link rel="shortcut icon" type="image/x-icon" href="{% static "imagenes/fiaOfertasLogo.png" %}" />
+	<meta charset="utf-8">
+	<meta name="author" content="FIAofertas">
+    <meta name="Title" content="FIAofertas"/>
+    <meta name="keywords" content="FIAofertas, tienda, fiaofertas, online, venta, ofertas, chart.js"> 
+    <meta name="Description" content="Realiza tus compras y ventas de articulos de manera rapida y sencilla en la FIA"/>
+    
+    <meta name="robots" content="index">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="{% static "css/baseFIAofertas.css" %}"/>
+	<link rel="stylesheet" href="{% static "css/edicionHistorial.css" %}"/>
+	<link rel="stylesheet" href="{% static "css/edicionForo.css" %}"/>
+
+	<style>
+		@font-face{
+			font-family: "Lobster-Regular";
+			src: url('{% static 'fonts/Lobster-Regular.ttf' %}') format("truetype");
+		}
+
+		@font-face{
+			font-family: "Righteous-Regular";
+			src: url("{% static 'fonts/Righteous-Regular.ttf'%}") format("truetype");
+		}
+
+		.alert{
+			margin: 70px 500px 0px 500px;
+		}
+
+		h2{
+			font-family: 'Righteous-Regular',cursive;
+			background-color: rgba(0,0,0,0.7);
+			text-align: center;
+			color: #fff;
+		}
+
+		h1{
+			font-family: 'Lobster-Regular',cursive;
+			background-color: rgba(0,0,0,0.7);
+			text-align: center;
+			color: #fff;
+		}
+
+		thead{
+			background-color: rgba(0,0,0,0.7);
+			color: #fff;
+		}
+   	
+    	{% if user.is_authenticated %}
+				body{
+				    background: url('{% static 'imagenes/fondo.jpg' %}');
+				    background-repeat: no-repeat;
+				    background-size: cover;
+				    background-attachment: fixed;
+				}
+    	{% else %}
+
+    			.container{
+		    		margin: 20px 100px 100px 100px;
+		    	}
+    			body{
+				    background: url('{% static 'imagenes/fondoLogIn.jpg' %}');
+				    background-repeat: no-repeat;
+				    background-size: cover;
+				    background-attachment: fixed;
+				}
+    	{% endif %}
+	</style>
+
+</head>
+<body>
+{% if user.is_superuser %}
+<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container-fluid">
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="/">FiaOfertas</a>
+		    </div>
+		    <div class="collapse navbar-collapse" id="myNavbar">
+		      <ul class="nav navbar-nav navbar-right">
+		        <li><a href="/logout">Salir</a></li>
+		      </ul>
+		    </div>
+		</div>
+	</nav>
+
+
+	<section class="container">
+
+
+        {% if todos %}
+        	<h1 id="usuarios">Usuarios</h1>
+
+        		{% for u in superuser %}
+        			<center><h3 style="font-family: 'Righteous-Regular',cursive;"><strong>Superusuario:</strong> {{u.username}}</h3></center>	
+        		{% endfor%}
+
+
+			<table class="table table-bordered table-hover">
+				<thead>
+					 <tr>
+				        <th>Carnet</th>
+				        <th>Nombre</th>			        
+				        <th>Apellido</th>
+				        <th>Género</th>
+				        <th>Cant. de veces reportado</th>
+				        <th>Eliminar</th>
+				        <th>Mensaje</th>
+				    </tr>
+					</thead>
+				<tbody>
+					{% for pr in usuarios %}
+							<th>{{pr.username}}</th>
+						{% for es in pr.vendedor_set.all %}
+					        <th>{{es.nombre}}</th>
+					        <th>{{es.apellido}}</th>			        
+					        <th>{{es.genero}}</th>
+				    	{% endfor %}
+				    	{% for re in pr.reportarusuario_set.all %}    
+				        	<th>{{re.numeroReport}}</th>
+				        	<th><button class="btn" onclick="location='{% url 'venta:eliminarUsuario' pr.id %}'">Eliminar</button></th>
+				        	{% if re.numeroReport > 10 %}
+				        		<th>Se recomienda elimar usuario</th>
+				        	{% else %}
+				        		<th>No hay necesidad de borrar este usuario</th>
+				        	{% endif %}
+				        {% endfor %}
+				    {% endfor %}
+				</tbody>
+			</table>	
+
+		{% endif %} 
+
+ 	
+{% else %}   	
+{% if user.is_authenticated %}
+	{% for vendedor in user.vendedor_set.all %}
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container-fluid">
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="/">FIAofertas</a>
+		    </div>
+		    <div class="collapse navbar-collapse" id="myNavbar">
+		      <ul class="nav navbar-nav navbar-right">
+		        <li><a href="/">FiaOfertas: Foro</a></li>
+		        <li><a href="/perfil">Perfil</a></li>
+		        <li><a href="/misventas">Mis Ventas</a></li>
+		        <li><a href="/nuevoProducto">Nueva Venta</a></li>
+		        <!--<li><a href="/login">Iniciar sesion</a></li>
+		        <li><a href="/registrarse">Registrarse</a></li>-->
+		        <li><a href="/logout">Salir</a></li>
+		      </ul>
+		    </div>
+		</div>
+	</nav>
+{% endfor %}
+{% else %}
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container-fluid">
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="/">FIAofertas</a>
+		    </div>
+		    <div class="collapse navbar-collapse" id="myNavbar">
+		      <ul class="nav navbar-nav navbar-right">
+		        <li><a href="/">FiaOfertas:Foro</a></li>
+		        <li><a href="/perfil">Perfil</a></li>
+		        <li><a href="/login">Iniciar sesión</a></li>
+		        <li><a href="/registrarse">Registrarse</a></li>
+		      </ul>
+		    </div>
+		</div>
+	</nav>
+	<div class="alert alert-warning">
+   		<strong>¡No ha iniciado sesión!</strong> Inicie Sesión: <a href="/login">Log In</a>
+	</div>
+
+{% endif %}
+
+	<section class="container">
+
+		<h1>Foro de productos</h1>
+
+		<p> <strong>Nº de ventas:</strong> <input type="text" disabled="true" value="{{i}}" size="3px"> </p>
+
+
+		<div class="col-sm-4 col-md-4">
+            <div class="dropdown">
+		    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Categorías
+		    <span class="caret"></span></button>
+		    <ul class="dropdown-menu">
+		      <li><a href="#libros" class="ancla">Libros</a></li>
+		      <li><a href="#electrónico" class="ancla">Electrónico</a></li>
+		      <li><a href="#materiales" class="ancla">Materiales</a></li>
+		      <li><a href="#otros" class="ancla">Otros</a></li>
+		    </ul>
+		  </div>
+		  <form action="" method="POST">
+				<div class="form-group form-inline">
+					{% csrf_token %}
+					<label>Buscar:</label>
+					<input type="hidden" name="action" id="action" value="buscar">
+					<input type="text" name="buscar" id="buscar" class="form-control">
+					<input type="submit" class="btn" name="btbuscar" id="btbuscar">
+				</div>
+			</form>
+        </div>
+
+        <div class="col-sm-8 col-md-8 content">
+
+        	{% if libros %}
+        	<h2 id="libros">Libros</h2>
+        		{% for pr in libros %}					
+				    <p><strong>ID:</strong> {{pr.id}}</p>
+					<p><strong>Descripción: </strong>{{pr.nombre}}</p>
+					<p><strong>Fecha: </strong>{{pr.fecha}}</p>
+					<p><strong>Precio: </strong>${{pr.precio}}</p>
+					<p><button class="btn" onclick = "location='{% url 'venta:producto' pr.id %}'"/>Ver Venta</button></p>
+					<hr />
+				{% endfor %}
+			{% endif %} 
+
+			{% if electronico %}
+				<h2 id="electronico">Electrónico</h2>
+				{% for pr in electronico %}
+				    <p><strong>ID:</strong> {{pr.id}}</p>
+					<p><strong>Descripción: </strong>{{pr.nombre}}</p>
+					<p><strong>Fecha: </strong>{{pr.fecha}}</p>
+					<p><strong>Precio: </strong>${{pr.precio}}</p>
+					<p><button class="btn" onclick = "location='{% url 'venta:producto' pr.id %}'"/>Ver Venta</button></p>
+					<hr />
+				{% endfor %}
+			{% endif %} 
+
+			{% if material %}
+				<h2 id="materiales">Materiales</h2>
+				{% for pr in material %}
+				    <p><strong>ID:</strong> {{pr.id}}</p>
+					<p><strong>Descripción: </strong>{{pr.nombre}}</p>
+					<p><strong>Fecha: </strong>{{pr.fecha}}</p>
+					<p><strong>Precio: </strong>${{pr.precio}}</p>
+					<p><button class="btn" onclick = "location='{% url 'venta:producto' pr.id %}'"/>Ver Venta</button></p>
+					<hr />
+				{% endfor %}
+			{% endif %} 
+
+			{% if otros %}
+				<h2 id="otros">Otros</h2>
+				{% for pr in otros %}
+				    <p><strong>ID:</strong> {{pr.id}}</p>
+					<p><strong>Descripción: </strong>{{pr.nombre}}</p>
+					<p><strong>Fecha: </strong>{{pr.fecha}}</p>
+					<p><strong>Precio: </strong>${{pr.precio}}</p>
+					<p><button class="btn" onclick = "location='{% url 'venta:producto' pr.id %}'"/>Ver Venta</button></p>
+					<hr />
+				{% endfor %}
+			{% endif %} 					
+		</div>
+
+		{% if user.is_authenticated %}
+			<br>
+			<center><submit class="btn" onclick = "location='/nuevoProducto'"/>Realizar venta <i class="glyphicon glyphicon-check"></i></submit></center>
+		{% endif %}
+
+		<!--
+		<div class="table-responsive container-table">
+		{% if electronico %}
+			<table class="table table-hover">
+			    <thead>
+			    <tr> <h2>Electronico</h2> </tr>
+			     <tr>
+			        <th>id</th>
+			        <th>Venta ofertada</th>
+			        <th>Fecha</th>
+			        <th>precio</th>
+			        <th>Opciones</th>
+			      </tr>
+			    </thead>
+			    <tbody>
+			    {% for pr in electronico %}
+			    	<tr>
+			        	<td> {{pr.id}} </td>
+			        	<td> {{pr.nombre}} </td>
+			        	<td> {{pr.fecha}} </td>
+			        	<td> ${{pr.precio}} </td>
+			        	<td>
+			        		<a href="{% url 'venta:producto' pr.id %}">ver</a>
+			        	</td>
+			      	</tr>
+			     {% endfor %}
+			      </tbody>
+			</table>
+		{% endif %}
+		</div>
+		<div class="table-responsive container-table">
+			<table class="table table-hover">
+			{% if material %}
+			    <thead>
+			    <tr> <h2>Materiales</h2> </tr>
+			     <tr>
+			        <th>id</th>
+			        <th>Venta ofertada</th>
+			        <th>Fecha</th>
+			        <th>precio</th>
+			        <th>Opciones</th>
+			      </tr>
+			    </thead>
+			    <tbody>
+			    {% for pr in material %}
+			    	<tr>
+			        	<td> {{pr.id}} </td>
+			        	<td> {{pr.nombre}} </td>
+			        	<td> {{pr.fecha}} </td>
+			        	<td> ${{pr.precio}} </td>
+			        	<td>
+			        		<a href="{% url 'venta:producto' pr.id %}">ver</a>
+			        	</td>
+			      	</tr>
+			     {% endfor %}
+			      </tbody>
+			</table>
+		{% endif %}
+		</div>
+		<div class="table-responsive container-table">
+		{% if libros %}
+			<table class="table table-hover">
+			    <thead>
+			    <tr> <h2>Libros</h2> </tr>
+			     <tr>
+			        <th>id</th>
+			        <th>Venta ofertada</th>
+			        <th>Fecha</th>
+			        <th>precio</th>
+			        <th>Opciones</th>
+			      </tr>
+			    </thead>
+			    <tbody>
+			    {% for pr in libros %}
+			    	<tr>
+			        	<td> {{pr.id}} </td>
+			        	<td> {{pr.nombre}} </td>
+			        	<td> {{pr.fecha}} </td>
+			        	<td> ${{pr.precio}} </td>
+			        	<td>
+			        		<a href="{% url 'venta:producto' pr.id %}">ver</a>
+			        	</td>
+			      	</tr>
+			     {% endfor %}
+			      </tbody>
+			</table>
+		{% endif %}
+		</div>
+		<div class="table-responsive container-table">
+		{% if otros %}
+			<table class="table table-hover">
+			    <thead>
+			    <tr> <h2> Otros </h2> </tr>
+			     <tr>
+			        <th>id</th>
+			        <th>Venta ofertada</th>
+			        <th>Fecha</th>
+			        <th>precio</th>
+			        <th>Opciones</th>
+			      </tr>
+			    </thead>
+			    <tbody>
+			    {% for pr in otros %}
+			    	<tr>
+			        	<td> {{pr.id}} </td>
+			        	<td> {{pr.nombre}} </td>
+			        	<td> {{pr.fecha}} </td>
+			        	<td> ${{pr.precio}} </td>
+			        	<td>
+			        		<a href="{% url 'venta:producto' pr.id %}">ver</a>
+			        	</td>
+			      	</tr>
+			     {% endfor %}
+			      </tbody>
+			</table>
+		{% endif %}
+		</div>-->
+	</section>
+</body>
+</html>
+{% endif %}

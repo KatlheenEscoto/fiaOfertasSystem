@@ -1,0 +1,45 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block Titulo %}{% endblock Titulo %}</title>
+
+	{% block META %}
+	{% endblock META %}
+
+	{% block EstilosCSS %}
+	{% endblock EstilosCSS %}
+
+	{% block JavaScript %}
+	{% endblock JavaScript %}
+
+</head>
+<body>
+	{% block Navegacion %}
+
+	<nav class="navbar navbar-default navbar-fixed-top">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="#">FIAofertas</a>
+		    </div>
+		    <div class="collapse navbar-collapse" id="myNavbar">
+		      <ul class="nav navbar-nav navbar-right">
+		        <li><a href="/">AULA</a></li>
+		        <li><a href="/">FIA</a></li>
+		        <li><a href="/">Foro</a></li>
+		        <li><a href="/login">LogIn</a></li>
+		        <li><a href="/Registrarse">Registrarse</a></li>
+		      </ul>
+		    </div>
+		  </div>
+	</nav>
+	{% endblock Navegacion %}
+
+	{% block Contenido %}
+	{% endblock Contenido %}
+
+	{% block PiePaginas %}
+	{% endblock PiePaginas %}
+
+</body>
+</html>

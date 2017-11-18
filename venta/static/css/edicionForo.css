@@ -1,0 +1,35 @@
+h2{
+	font-family: 'Righteous-Regular',cursive;
+	background-color: rgba(0,0,0,0.7);
+	text-align: center;
+	color: #fff;
+}
+
+h1{
+	font-family: 'Lobster-Regular',cursive;
+	background-color: rgba(0,0,0,0.7);
+	text-align: center;
+	color: #fff;
+}
+
+.btn{
+    background: #DE6262; 
+    color:#fff; 
+    font-weight:bold;
+    border-color: #DE6262;    
+}
+
+.btn:hover{
+	background: #DE6262;
+	border-color: #fff;
+}
+
+.content{
+	overflow: auto;
+	/*height: 330px;*/
+
+}
+
+.btn:active{
+	border-color: #fff;	
+}

@@ -1,0 +1,237 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>FIAofertas: Perfil de Usuario.</title>
+	<link rel="shortcut icon" type="image/x-icon" href="{% static "imagenes/fondoFIA.jpg" %}">
+
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="{% static "css/baseFIAofertas.css" %}"/>
+	<link rel="stylesheet" href="{% static "css/edicionPerfil.css" %}"/>
+	<style>
+		@font-face{
+			font-family: "Lobster-Regular";
+			src: url("{% static "fonts/Lobster-Regular.ttf" %}") format("truetype");
+		}
+
+		.btn-message{
+		    background: #DE6262; 
+		    color:#fff; 
+		    font-weight:bold;
+		    border-color: #DE6262;    
+		}
+
+		.btn-message:hover{
+			background: #DE6262;
+			border-color: #fff;
+		}
+
+		a, a:hover{
+			color: #fff;
+		}
+		
+		{% if user.is_authenticated %}
+				body{
+				    background: url('{% static 'imagenes/fondo.jpg' %}');
+				    background-repeat: no-repeat;
+				    background-size: cover;
+				    background-attachment: fixed;
+				}
+    	{% else %}
+
+    			.container{
+		    		margin: 100px 100px 100px 100px;
+		    	}
+    			body{
+				    background: url('{% static 'imagenes/fondoLogIn.jpg' %}');
+				    background-repeat: no-repeat;
+				    background-size: cover;
+				    background-attachment: fixed;
+				}
+    	{% endif %}		
+	</style>
+</head>
+<body>
+	
+	{% if user.is_authenticated %}
+		{% for vendedor in user.vendedor_set.all %}
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+			    <div class="navbar-header">
+			      <a class="navbar-brand" href="/">FIAofertas</a>
+			    </div>
+			    <div class="collapse navbar-collapse" id="myNavbar">
+			      <ul class="nav navbar-nav navbar-right">
+			        <li><a href="/">FiaOfertas: Foro</a></li>
+			        <li><a href="/perfil">Perfil</a></li>
+			        <li><a href="/misventas">Mis Ventas</a></li>
+			        <li><a href="/nuevoProducto">Nueva Venta</a></li>
+			        <!--<li><a href="/login">Iniciar sesion</a></li>
+			        <li><a href="/registrarse">Registrarse</a></li>-->
+			        <li><a href="/logout">Salir</a></li>
+			      </ul>
+			    </div>
+			</div>
+		</nav>
+	   	{% endfor %}
+	{% else %}
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+			    <div class="navbar-header">
+			      <a class="navbar-brand" href="/">FIAofertas</a>
+			    </div>
+			    <div class="collapse navbar-collapse" id="myNavbar">
+			      <ul class="nav navbar-nav navbar-right">
+			        <li><a href="/">FiaOfertas:Foro</a></li>
+			        <li><a href="/perfil">Perfil</a></li>
+			        <li><a href="/login">Iniciar sesión</a></li>
+			        <li><a href="/registrarse">Registrarse</a></li>
+			      </ul>
+			    </div>
+			</div>
+		</nav>
+	{% endif %}
+
+	<section class="container">
+    <div class="row">
+
+    	<h1>Perfil de Usuario.</h1>
+
+   		<!-- Imagen -->
+   		{% if user.is_authenticated %}
+   			{% for vendedor in user.vendedor_set.all %}
+   				{% if vendedor.image %}
+   					<div class="col-sm-2 col-md-2">
+   						<img src="{{vendedor.image.url}}" alt="no se puede mostrar imagen" class="img-rounded img-responsive" />
+   					</div>
+   				{% else %}
+   					<div class="col-sm-2 col-md-2">
+   						<img src="{% static "imagenes/user.png" %}" alt="" class="img-rounded img-responsive" />
+   					</div>
+   				{% endif %}
+
+        	<div class="col-sm-4 col-md-4 rejilla">
+
+        	<form class="form-inline" action="{% url 'venta:editar' vendedor.id %}" method="post">   
+        	{% csrf_token %}
+				<fieldset>
+			  		<legend><i class="glyphicon glyphicon-user"></i> Datos personales: Id: {{vendedor.id}} </legend>
+			  		<div class="form-group">
+				    	<label class="control-label col-sm-4" for="carnet">Carnet:</label>
+				    	<div class="col-sm-8">
+				      		<input type="text" class="form-control" id="carnet" value=" {{vendedor.carnet}} " disabled="">
+			   			</div>
+ 					</div>
+			  	<div class="form-group">
+				    <label class="control-label col-sm-4" for="nombre">Nombre:</label>
+				    <div class="col-sm-8">
+				      	<input type="text" class="form-control" id="nombre" value=" {{vendedor.nombre}} " disabled="">
+			   		</div>
+ 				</div>
+ 				<div class="form-group">
+				    <label class="control-label col-sm-4" for="apellido">Apellido:</label>
+				    <div class="col-sm-8">
+				      	<input type="text" class="form-control" id="apellido" value=" {{vendedor.apellido}} " disabled="">
+			   		</div>
+ 				</div>
+ 				<div class="form-group">
+				    <label class="control-label col-sm-4" for="genero">Género:</label>
+				    <div class="col-sm-8">
+				      	<input type="text" class="form-control" id="genero" value=" {{vendedor.genero}} " disabled="">
+			   		</div>
+ 				</div>
+
+			</fieldset>
+
+			<br />
+			<fieldset>
+			  	<legend><i class="glyphicon glyphicon-user"></i> Datos personales editables:</legend>
+			  	<div class="form-group">
+				    <label class="control-label col-sm-8" for="correo">Correo electrónico:</label>
+				    <div class="col-sm-4">
+				      	<input type="text" class="form-control" id="email" name="email" value="{{vendedor.email}}">
+			   		</div>
+ 				</div>
+			  	<div class="form-group">
+				    <label class="control-label col-sm-8" for="telefono">Telefóno de contacto:</label>
+				    <div class="col-sm-4">
+				      	<input type="text" class="form-control" id="telefono" name="telefono" value=" {{vendedor.telefono}} ">
+			   		</div>
+ 				</div>
+			</fieldset>
+			<br><input type="submit" class="btn btn-danger" id="guardar" name="submit" value="Guardar cambios"><br />
+			</form>
+			<br />
+			<fieldset>
+			  	<legend><i class="glyphicon glyphicon-user"></i> Modificar Foto:</legend>
+			  	<form class="form-inline" action="{% url 'venta:editar_foto' vendedor.id %}" method="post" enctype="multipart/form-data">
+			  	{% csrf_token %}
+				  	<div>
+				    	<label for="imagen_descargable">Elige imagen: (PNG, JPG)</label>
+				    	{% if vendedor.image %}
+				    		<label> {{vendedor.image.url}} </label>
+				    	{% else %}
+				    		<label> aun no ha subido imagen </label>
+				    	{% endif%}
+				    	<input type="file" id="imagen" name="imagen" accept=".jpg, .jpeg, .png" required="">
+				  	</div>
+ 				  	<br>
+ 				  	<input type="submit" class="btn btn-danger" id="guardar" name="submit" value="Guardar foto"><br />
+				</form>
+			</fieldset>
+			<br />
+			<fieldset>
+			  	<legend><i class="glyphicon glyphicon-user"></i> Modificar Contrasenia:</legend>
+			  	<form class="form-inline" action="{% url 'venta:editar_contra' user.id %}" method="post">
+			  	{% csrf_token %}
+			  	<h4 class="text-center"><em>{{ valor }}</em></h4>
+			  	    <div>
+				    	<label for="imagen_descargable">Contraseña anterior</label>
+				    	<input type="password" name="password" id="password" class="form-control">
+				  	</div>
+				  	<div>
+				    	<label for="imagen_descargable">Nueva contraseña</label>
+				    	<input type="password" name="contra" id="contra" class="form-control">
+				  	</div>
+ 				  	<br>
+ 				  	<input type="submit" class="btn btn-danger" id="guardar" name="submit" value="Cambiar contraseña"><br />
+				</form>
+			</fieldset>
+        	</div>
+    		</div>
+			{% endfor %}
+
+			<br>
+			<button class="btn btn-message" onclick = "location='/mensajes'">Ver Mensajes <i class="glyphicon glyphicon-message"></i></button>
+
+   			</section>
+	   	{% else %}
+	   		<div class="alert alert-warning">
+		   			<strong>¡No ha iniciado sesión!</strong> Inicie Sesión: <a href="/login">Log In</a>
+			</div>	
+
+    	    <div class="col-sm-2 col-md-2">
+        	    <img src="{% static "imagenes/user.png" %}" alt="" class="img-rounded img-responsive" />
+        	</div>
+
+        	<div class="col-sm-4 col-md-4 rejilla">
+
+	        	<form class="form-inline"> 
+				<fieldset>
+				  		<legend><i class="glyphicon glyphicon-user"></i> Datos personales:</legend>
+				  		<div class="form-group">
+					    	<label class="control-label col-sm-4" for="carnet">
+					    	Usuario:</label>
+					    	<div class="col-sm-8">
+					      		<input type="text" class="form-control" id="carnet" value=" Anónimo " disabled="">
+				   			</div> 					
+				   		</div>
+				</fieldset>
+				</form>
+			</div>
+	{% endif %}
+</body>
+</html>

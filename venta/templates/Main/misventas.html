@@ -1,0 +1,142 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title> {% block titulo %} {% endblock %} </title>
+	<link rel="shortcut icon" type="image/x-icon" href="{% static "imagenes/fondoFIA.jpg" %}">
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="{% static "css/baseFIAofertas.css" %}"/>
+	<link rel="stylesheet" href="{% static "css/edicionHistorial.css" %}"/>
+	<style>
+		@font-face{
+			font-family: "Lobster-Regular";
+			src: url("{% static 'fonts/Lobster-Regular.ttf'%}") format("truetype");
+		}
+
+		h1{
+			font-family: 'Lobster-Regular',cursive;
+			background-color: rgba(0,0,0,0.7);
+			text-align: center;
+			color: #fff;
+		}
+
+		h2{
+			font-family: 'Lobster-Regular',cursive;
+			background-color: rgba(255,255,254,0.7);
+			text-align: center;
+			color: #000;
+		}
+
+		thead{
+			background-color: rgba(0,0,0,0.7);
+			color: #fff;
+		}
+
+	</style>
+
+</head>
+<body>
+
+	{% if user.is_authenticated %}
+		{% for vendedor in user.vendedor_set.all %}
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+			    <div class="navbar-header">
+			      <a class="navbar-brand" href="/">FIAofertas</a>
+			    </div>
+			    <div class="collapse navbar-collapse" id="myNavbar">
+			      <ul class="nav navbar-nav navbar-right">
+			        <li><a href="/">FiaOfertas: Foro</a></li>
+			        <li><a href="/perfil">Perfil</a></li>
+			        <li><a href="/misventas">Mis Ventas</a></li>
+			        <li><a href="/nuevoProducto">Nueva Venta</a></li>
+			        <!--<li><a href="/login">Iniciar sesion</a></li>
+			        <li><a href="/registrarse">Registrarse</a></li>-->
+			        <li><a href="/logout">Salir</a></li>
+			      </ul>
+			    </div>
+			</div>
+		</nav>
+	   	{% endfor %}
+	{% else %}
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+			    <div class="navbar-header">
+			      <a class="navbar-brand" href="/">FIAofertas</a>
+			    </div>
+			    <div class="collapse navbar-collapse" id="myNavbar">
+			      <ul class="nav navbar-nav navbar-right">
+			        <li><a href="/">FiaOfertas:Foro</a></li>
+			        <li><a href="/perfil">Perfil</a></li>
+			        <li><a href="/login">Iniciar sesión</a></li>
+			        <li><a href="/registrarse">Registrarse</a></li>
+			      </ul>
+			    </div>
+			</div>
+		</nav>
+	{% endif %}
+
+	<section class="container">
+	{% if user.is_authenticated %}
+
+			<h1>Mis Ventas</h1>
+
+			<p>Listado de ventas del usuario: <strong> {{user}} </strong></p>
+			<table class="table table-bordered table-hover">
+				<thead>
+					 <tr>
+				        <th>id</th>
+				        <th>Venta ofertada</th>			        
+				        <th>Fecha</th>
+				        <th>precio</th>
+				        <th>Opciones</th>
+				    </tr>
+					</thead>
+				<tbody>
+				{% for pr in user.producto_set.all %}
+				<tr>
+					<td> {{pr.id}} </td>
+					<td> {{pr.nombre}} </td>
+					<td> {{pr.fecha}} </td>
+					<td> {{pr.precio}} </td>
+					<td>
+					<a href="{% url 'venta:producto' pr.id %}"><i class="glyphicon glyphicon-eye-open"></i></a> / <a href="{% url 'venta:eliminar' pr.id %}"><i class="glyphicon glyphicon-remove"></i></a>
+					</td>
+				</tr>
+		   		{% endfor %}
+		   	</tbody>
+		   	</table>
+
+		   	<div class="alert alert-danger text-right">
+		   		<strong>Reporte: <a href="/reporte">Generar reporte de ventas. </strong></a></a>
+			</div>
+
+{% for vendedor in user.vendedor_set.all %}
+	   		<p> <label>Utilidad:</label> {{utilidad}} </p> 
+
+	   		<details> <summary>Detalles de productos vendidos:</summary>
+	   			{% for ul in user.utilidad_set.all %}
+	   				<strong>{{ forloop.counter }}.	</strong> <strong>Nombre: </strong> {{ul.nombre}} <strong>Precio: </strong> ${{ul.saldo}}  <strong>Fecha: </strong>{{ul.fecha}}
+	   				<br />
+	   			{% endfor %}
+	   			<hr />
+	   			<p> Total = ${{utilidad}} </p>
+
+	   			<br /> <strong><a href="/eliminarUtilidad">Eliminar datos</a></strong>
+	   		</details>
+{% endfor %}
+	{% else %}
+
+			<h1>No ha iniciado sesión.</h1>
+			<div class="alert alert-warning">
+		   		<strong>¡No ha iniciado sesión!</strong> Inicie Sesión: <a href="/login">Log In</a>
+			</div>
+
+	{% endif %}
+
+	</section>
+</body>
+</html>

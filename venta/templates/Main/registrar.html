@@ -1,0 +1,83 @@
+{% extends "Base/baseExterna.html" %}
+{% load staticfiles %}
+
+	{% block Titulo %}
+    FIAofertas: Registro de Usuario.
+	{% endblock Titulo %}
+
+	{% block META %}
+		<meta charset="utf-8">
+		<link rel="shortcut icon" type="image/x-icon" href="{% static "imagenes/fondoFIA.jpg" %}">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+		<link rel="stylesheet" href="{% static "css/registroNewUser.css" %}"/>
+
+		<style>
+			@font-face {
+    			font-family: 'Lobster';
+    			src: url('{% static 'fonts/Lobster-Regular.ttf' %}') format("truetype");
+ 			}
+		</style>
+	{% endblock META %}
+
+
+{% block Contenido %}
+
+	{% if user.is_authenticated %}	
+	<section class="content">
+		<h2 class="text-center" style="font-family: 'Lobster', cursive;">¡Usted ya ingreso!</h2>
+		<center><label>Ingrese a para: </label>
+		<a href="/logout">Volver a ingresar.</a></center>
+	</section>		
+    {% else %}
+    <div class="container">
+	    <div class="row">
+	        <div class="col-md-4 col-center">
+	            <div class="panel">
+	                <div class="panel-heading" style="font-family: 'Lobster', cursive;">¡Gracias por registrarte!</div>
+	                <div class="panel-body">
+	                    <form role="form" enctype="multipart/form-data" method="post" action="" accept-charset="UTF-8">
+	                    {% csrf_token %}
+	                    <h4 class="text-center"><em>{{ valor }}</em></h4>
+	                    	<label for="carnet">Carnet:</label>
+	                    	<input type="text" id="username" name="username" class="form-control" name="carnet" placeholder="Ejemplo: pp15001" pattern="[a-zA-Z]{2}[0-9]{5}" required="required">
+	                    
+	                        <label for="nombre">Nombre:</label>  
+	                        <input type="text" id="nombre" name="nombre" class="form-control" name="nombre" placeholder="Ejemplo: Juan" pattern="[a-zA-Z]{1-15}" required="required">
+	                        
+	                        <label for="apellido">Apellido:</label>
+	                        <input type="text" id="apellido" name="apellido" class="form-control" name="apellido" placeholder="Ejemplo: Peréz" pattern="[a-zA-Z]{1-15}" required="required">
+	              
+	                        <label for="genero" class="m-t-10">Género:</label>
+	                        <select id="genero" class="form-control" name="genero">
+	                        	<option id="masculino" value="masculino">Masculino</option>
+	                            <option id="femenino" value="femenino">Femenino</option>
+	                        </select>
+	                        
+	                        <label for="telefono" class="m-t-10">Teléfono:</label>
+	                        <input type="text" id="telefono" name="telefono" class="form-control" name="telefono" placeholder="Ejemplo: 00000000" pattern="[0-9]{8}" required="required">
+
+	                        <label for="correo" class="m-t-10">Correo electrónico:</label>
+	                        <input type="email" id="email" name="email" placeholder="Ejemplo: Juan.Perez@gmail.com" class="col-md-12 col-center" required="required">
+	                        <h4 class="text-center"><em>{{ valor1 }}</em></h4>
+	                        <label for="contrasenia" class="m-t-10">Contraseña:</label>
+	                        <input type="password" id="password" name="password" class="form-control" name="contrasenia" placeholder="">
+	                        
+	                        <label for="contraseniaVerificada" class="m-t-10">Verificar Contraseña:</label>
+	                        <input type="password" id="password2" class="form-control" name="password2" placeholder="">
+	                       <div>
+	                       		<img src="{% static "imagenes/user.png" %}" name="imagen" id="imagen" hidden="">
+
+				    			<center><button type="submit" class="btn" id="submitbtn" name="submit">Registrarse</button></center>				  	
+				  			</div>                        
+	                    </form>
+	            	</div>
+	        	</div>
+	    	</div>
+	    	<div class="col-md-8 banner-sec"></div>	  
+		</div>
+	</div>
+		{% endif %}
+{% endblock Contenido %}

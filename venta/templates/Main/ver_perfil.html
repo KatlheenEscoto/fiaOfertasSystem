@@ -1,0 +1,106 @@
+{% extends "Base/base.html" %}
+{% load staticfiles %}
+{% block Titulo %}
+    FIAofertas: Ver perfil.
+{% endblock Titulo %}
+{% block EstilosCSS %}
+	<style>
+
+		@font-face{
+			font-family: "Lobster-Regular";
+			src: url('{% static 'fonts/Lobster-Regular.ttf' %}') format("truetype");
+		}
+
+		.btn{
+		    background: #DE6262; 
+		    color:#fff; 
+		    font-weight:bold;
+		    border-color: #DE6262;    
+		}
+
+		.btn:hover{
+			background: #DE6262;
+			border-color: #fff;
+		}
+
+	</style>
+{% endblock EstilosCSS %}
+
+
+{% block Contenido %}
+	<section class="container">
+	{% for us in perfil.vendedor_set.all %}
+		<div>
+		<h2>{{valor}} </h2>
+		<h1> Hola soy: {{us.nombre}}</h1>
+		<fieldset>
+			<legend><i class="glyphicon glyphicon-user"></i> Datos personales:</legend>
+			<p>Carnet:<strong> {{us.carnet}}</strong></p>
+			<p>Nombre:<strong> {{us.nombre}}</strong></p>
+			<p>Apellido:<strong> {{us.apellido}}</strong></p>
+			<p>Telefóno:<strong> {{us.telefono}}</strong></p>
+			<p>Correo electrónico:<strong> {{us.email}}</strong></p>
+		</fieldset>
+	{% endfor %}
+	{% if usuario.is_authenticated %}
+		<div class="col-sm-12 col-md-12">
+			<form class="form-inline" method="POST" action="{% url 'venta:message' perfil.id %}">
+			{% csrf_token %}
+			<fieldset>
+				<legend><i class="glyphicon glyphicon-envelope"></i> Enviar mensaje:</legend>
+					<div>
+					    <label for="imagen_descargable">Emisor: {{usuario.username}} </label>
+					    <input type="text" name="emisor" id="emisor" value=" {{usuario.username}} " hidden="">
+					    <p>
+					    	<label class="control-label col-sm-4">Mensaje:</label>
+							<div class="col-sm-8">
+					    		<textarea class="form-control" id="coment" name="coment" required="required"></textarea>
+					    	</div>
+					   	</p>
+					</div>
+					  	<br>
+	 				  	<input type="submit" class="btn" id="guardar" name="submit" value="Enviar."><br />
+			</form>
+				</fieldset>
+				<br />
+		</div>
+
+		<div class="col-sm-12 col-md-12">
+			<form class="form-inline" method="POST" action="">
+			{% csrf_token %}
+			<fieldset>
+				<legend><i class="glyphicon glyphicon-envelope"></i> Reportar usuario:</legend>
+					<div>
+					<input type="hidden" name="action" id="action" value="reportar">
+					    <label for="imagen_descargable">Emisor: {{usuario.username}} </label>
+					    <input type="text" name="emisor" id="emisor" value=" {{usuario.username}} " hidden="">
+					    <p>
+					    	<label class="control-label col-sm-4">Porque lo desea reportar:</label>
+							<div class="col-sm-8">
+					    		<textarea class="form-control" id="dato" name="dato" required="required"></textarea>
+					    	</div>
+					   	</p>
+					</div>
+					  	<br>
+	 				  	<input type="submit" class="btn" id="guardar" name="submit" value="Enviar."><br />
+			</form>
+				</fieldset>
+				<br />
+		</div>
+
+
+
+		<div class="col-sm-12 col-md-12">
+			{% for re in reportes %}
+				<label># de reportes: {{re.numeroReport}} </label>
+			{% endfor %}
+		<br />
+		</div>
+		
+		
+
+	{% else %}
+		<label>El usuario debe iniciar sesión para enviar mensajes.</label>
+	</section>
+	{% endif %}
+{% endblock Contenido %}

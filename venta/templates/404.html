@@ -1,0 +1,39 @@
+{% extends 'Base/base.html' %}
+{% load staticfiles %}
+
+{% block META %}
+	<link rel="shortcut icon" type="image/x-icon" href="{% static "imagenes/fondoFIA.jpg" %}">
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="{% static "css/baseFIAofertas.css" %}"/>
+{% endblock %}
+
+{% block EstilosCSS%}
+	<style>
+		@font-face{
+			font-family: "Lobster-Regular";
+			src: url("{% static 'fonts/Lobster-Regular.ttf'%}") format("truetype");
+		}
+
+		h1{
+			font-family: 'Lobster-Regular',cursive;
+			text-align: center;
+			color: #fff;
+		}
+
+		h2{
+			font-family: 'Lobster-Regular',cursive;
+			text-align: center;		
+		}
+	</style>
+{% endblock %}
+
+{% block Contenido %}
+	<section class="container">
+		<h1> Página no encontrada</h1>
+		<center><img src="{% static "imagenes/fiaOfertasLogo.png" %}"></center>
+	</section>
+
+{% endblock %}

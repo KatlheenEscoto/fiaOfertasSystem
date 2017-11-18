@@ -1,0 +1,98 @@
+{% extends "Base/base.html" %}
+{% load staticfiles %}
+{% block Titulo %}
+    FIAofertas: Venta
+{% endblock Titulo %}
+
+{% block EstilosCSS %}
+	<style>
+
+		@font-face{
+			font-family: "Lobster-Regular";
+			src: url('{% static 'fonts/Lobster-Regular.ttf' %}') format("truetype");
+		}
+
+		.image {
+		    border: 10px solid transparent;
+		    margin-bottom: 25px;
+		    width: 200px;
+		    height: 200px;
+		    opacity: 0.7;
+		}
+		.image:hover {
+		    border-color: #f1f1f1;
+		}
+
+		.btn{
+		    background: #DE6262; 
+		    color:#fff; 
+		    font-weight:bold;
+		    border-color: #DE6262;    
+		}
+
+		.btn:hover{
+			background: #DE6262;
+			border-color: #fff;
+		}
+
+		a{
+			color: #fff;
+		}
+	</style>
+{% endblock EstilosCSS %}
+
+{% block Contenido %}
+	<section class="container">
+		<h1>Producto: {{producto.nombre}} </h1>
+
+        <div class="col-sm-3 col-md-3">
+            <img src="{{producto.image.url}}" class="img-circle image" >
+        </div>
+
+        <div class="col-sm-9 col-md-9">
+        	<fieldset>
+        	<legend>Datos del producto:</legend>
+				<p><strong>Descripción:</strong> {{producto.descripcion}}</p>
+				<p><strong>Precio:</strong> ${{producto.precio}} </label></p>
+				<p><strong>Ofertado por:</strong> {{producto.vendedor}} </p>
+				<p><strong>Para comunicarte con el vendedor: </strong><button type="btn" class="btn" onclick = "location='{% url 'venta:ver_perfil' producto.vendedor.id %}'">Ver perfil</button></p>
+			</fieldset>
+		</div>
+
+
+		{% if nomb.is_authenticated %}
+		<div class="col-sm-12 col-md-12">
+			<form class="form-inline" method="POST" action="{% url 'venta:comentario' producto.id %}">
+			{% csrf_token %}
+			<fieldset>
+				<legend><i class="glyphicon glyphicon-user"></i> Enviar mensaje:</legend>
+					  	<div>
+					  		<div class="form-group">
+						    	<label for="imagen_descargable">Emisor</label>
+						    	<input type="text" name="emisor" id="emisor" value=" {{nomb.username}}" hidden="">
+						    </div><br/>
+					    	<div class="form-group">
+					    		<label class="control-label col-sm-4">Comentario:</label>
+								<div class="col-sm-8">
+					    		<textarea class="form-control" id="coment" name="coment" required="required"></textarea>
+					    		</div>
+					   		</div>
+					   	</div>
+					  	<br>
+	 				  	<input type="submit" class="btn" id="guardar" name="submit" value="Enviar"><br />
+					</form>
+				</fieldset>
+				<br />
+			{% else %}
+			<label>Debe iniciar sesion para dejar comentarios.</label>
+			{% endif %}
+			<div class="col-sm-12 col-md-12">
+			<fieldset>
+				<legend><i class="glyphicon glyphicon-comment"></i> Comentarios:</legend>
+				{% for comentario in producto.comentarioproducto_set.all %}
+					<p> <label>{{comentario.emisor}}:</label> <label>{{comentario.texto}}</label></p>
+				{% endfor %}
+			</fieldset>
+	</div>
+	</section>
+{% endblock Contenido %}

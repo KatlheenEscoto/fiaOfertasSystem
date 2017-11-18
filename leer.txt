@@ -1,0 +1,36 @@
+FiaStore: 
+Sistema de compra/venta de la Universidad De El Salvador.
+El sistema puede: 
+//Usuario
+->Ingresar un nuevo usuario (echo)
+->Iniciar sesion (echo)
+->Ver perfil sin editar (echo)
+->Ver perfil y editar foto (echo)
+->editar contrase;a (echo)
+
+//ventas
+->Ingresar nuevo producto(echo)
+->Visualiar ofertas de productos sin estar logeado visualizara todos los productos a la venta por categoria (echo)
+->dejar mensajes al vendedor (echo)
+->ver mensaje el propietario(echo)
+->Visualizar ofertas de productos estando logeado *misventas (Echo)
+->visualizar un producto en especifico y dejar comentario(echo)
+->Ingresar nuevo producto (echo)
+->Eliminar Venta (echo)
+->Al eliminar guarda el precio de la venta y al final da la suma del total vendido (echo)
+
+
+/**********Todo esto falta**********/
+->eleminar mensajes (en proceso)<<<<<<---------------------
+->ordenar URLS (en proceso)<<<<<<---------------------
+->validar datos de entrada, todos los datos... en el precio no permite meter decimales arreglar eso (en proceso)<<<<<<---------------------
+->Pensar que mas añadirle (en proceso)<<<<<<---------------------
+->buscar errores (en proceso)<<<<<<---------------------
+->poner los datos en el pdf (en proceso)
+->validar que ponga la contra antigua antes de poner la nueva y confirmar
+
+········REQUERIMIENTO.........
+#pillow 4.0.0
+pip install pillow==4.0.0
+#reportlab
+pip install reportlab==4.0.0
