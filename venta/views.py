@@ -250,7 +250,7 @@ def editar(request, perfil_id):
 			return render_to_response('Main/index.html',context)		
 		else :
 			context={'perfil':perfil}
-			return render_to_response('Main/editar.html',context)	
+			return render_to_response('Main/editarPerfil.html',context)	
 
 	except (KeyError, perfil.DoesNotExist):
 		return render(request, 'Main/404.html', {
