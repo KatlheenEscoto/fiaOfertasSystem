@@ -4,6 +4,17 @@
     FIAofertas: Venta
 {% endblock Titulo %}
 
+{% block META %}
+	<link rel="shortcut icon" type="image/x-icon" href="{% static "imagenes/fondoFIA.jpg" %}">
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="{% static "css/baseFIAofertas.css" %}"/>
+	<link rel="stylesheet" href="{% static "css/edicionHistorial.css" %}"/>
+	<link rel="stylesheet" href="{% static "css/producto.css" %}"/>
+{% endblock %}
+
 {% block EstilosCSS %}
 	<style>
 
@@ -12,32 +23,11 @@
 			src: url('{% static 'fonts/Lobster-Regular.ttf' %}') format("truetype");
 		}
 
-		.image {
-		    border: 10px solid transparent;
-		    margin-bottom: 25px;
-		    width: 200px;
-		    height: 200px;
-		    opacity: 0.7;
-		}
-		.image:hover {
-		    border-color: #f1f1f1;
+		@font-face{
+			font-family: "Righteous-Regular";
+			src: url("{% static "fonts/Righteous-Regular.ttf" %}") format("truetype");
 		}
 
-		.btn{
-		    background: #DE6262; 
-		    color:#fff; 
-		    font-weight:bold;
-		    border-color: #DE6262;    
-		}
-
-		.btn:hover{
-			background: #DE6262;
-			border-color: #fff;
-		}
-
-		a{
-			color: #fff;
-		}
 	</style>
 {% endblock EstilosCSS %}
 

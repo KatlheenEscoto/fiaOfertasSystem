@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^registrarse/$', views.auth_signup,name="authentication"),
     url(r'^logout$',auth_views.logout, {'next_page':'/'}, name='logout'),
     url(r'^$', views.index),
-	url(r'^perfil/', views.perfil),
+	url(r'^perfil/', views.perfil,name='perfil'),
     url(r'^mensajes/', views.ver_mensajes),
     url(r'^misventas/', views.misventas),
     url(r'^eliminarUtilidad/', views.eliminarUtilidad),

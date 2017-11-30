@@ -10,3 +10,24 @@ h1{
 	text-align: center;
 }
 
+.btn-message{
+	background: #DE6262; 
+	color:#fff; 
+	font-weight:bold;
+	border-color: #DE6262;    
+}
+
+.btn-message:hover{
+	background: #DE6262;
+	border-color: #fff;
+}
+
+a, a:hover{
+	font-weight: bold;
+	color:rgb(121, 224, 224);
+}
+
+legend{
+	font-family: 'Righteous-Regular',cursive;
+    color:#4FA9B1;
+}

@@ -247,7 +247,8 @@ def editar(request, perfil_id):
 			perfil.save()
 			context={'email':email, 'cel':cel, 'perfil':perfil, perfil_id:'perfil_id', 'newid':newId}
 
-			return render_to_response('Main/index.html',context)		
+			#return render_to_response('Main/Perfil.html',context)
+			return redirect('venta:editar')	
 		else :
 			context={'perfil':perfil}
 			return render_to_response('Main/editarPerfil.html',context)	
@@ -267,7 +268,8 @@ def editar_foto(request, perfil_id):
 			perfil.image=foto
 			perfil.save()
 			context={perfil_id:'perfil_id', foto:'foto'}			
-			return render_to_response('Main/index.html',context)		
+			#return render_to_response('Main/index.html',context)
+			return redirect('venta:perfil')			
 		else :
 			context={'perfil':perfil}
 			return render_to_response('Main/editar_foto.html',context)	
@@ -295,7 +297,8 @@ def editar_contra(request, user_id):
 			    #update_session_auth_hash(request,perfil) #tambien se puede usar 
 			    info='Debe volver a iniciar sesion'
 			    context={contra:'contra', info:'info'}
-			    return redirect('/',context)
+			    #return redirect('/',context)
+			    return redirect('venta:perfil')	
 			else:
 				valor='Contrasenia incorrecta'
 				context={'valor':valor}

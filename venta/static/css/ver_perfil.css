@@ -1,0 +1,28 @@
+.btn{
+	background: #DE6262; 
+	color:#fff; 
+	font-weight:bold;
+	border-color: #DE6262;    
+}
+
+.btn:hover{
+	background: #DE6262;
+	border-color: #fff;
+}
+
+legend{
+	font-family: 'Righteous-Regular',cursive;
+	color: #4FA9B1;
+}
+
+.image {
+	border: 10px solid transparent;
+	margin-bottom: 25px;
+	opacity: 0.7;
+}
+
+
+.image:hover {
+	border-color: #DE6262;
+}
+
