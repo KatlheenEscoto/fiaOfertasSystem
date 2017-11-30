@@ -88,10 +88,10 @@
 			<table class="table table-bordered table-hover">
 				<thead>
 					 <tr>
-				        <th>id</th>
-				        <th>Venta ofertada</th>			        
+				        <th>ID</th>
+				        <th>Producto ofertado</th>			        
 				        <th>Fecha</th>
-				        <th>precio</th>
+				        <th>Precio</th>
 				        <th>Opciones</th>
 				    </tr>
 					</thead>
@@ -101,7 +101,7 @@
 					<td> {{pr.id}} </td>
 					<td> {{pr.nombre}} </td>
 					<td> {{pr.fecha}} </td>
-					<td> {{pr.precio}} </td>
+					<td> ${{pr.precio}} </td>
 					<td>
 					<a href="{% url 'venta:producto' pr.id %}"><i class="glyphicon glyphicon-eye-open"></i></a> / <a href="{% url 'venta:eliminar' pr.id %}"><i class="glyphicon glyphicon-remove"></i></a>
 					</td>
