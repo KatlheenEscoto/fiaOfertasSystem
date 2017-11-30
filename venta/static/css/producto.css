@@ -32,3 +32,13 @@ legend{
 	font-family: 'Righteous-Regular',cursive;
     color:#4FA9B1;
 }
+
+.content{
+	overflow: auto;
+    border-style: dashed;
+    border-width: 1px;
+    background-color: #fff;
+    border-radius: 10px;
+	/*height: 330px;*/
+
+}

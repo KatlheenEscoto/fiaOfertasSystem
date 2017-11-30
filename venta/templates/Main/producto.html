@@ -73,16 +73,20 @@
 					</form>
 				</fieldset>
 				<br />
+		</div>
 			{% else %}
 			<label>Debe iniciar sesion para dejar comentarios.</label>
 			{% endif %}
 			<div class="col-sm-12 col-md-12">
 			<fieldset>
 				<legend><i class="glyphicon glyphicon-comment"></i> Comentarios:</legend>
+				<div class="col-sm-10 col-md-10 content">
 				{% for comentario in producto.comentarioproducto_set.all %}
 					<p> <label>{{comentario.emisor}}:</label> <label>{{comentario.texto}}</label></p>
+					<hr />
 				{% endfor %}
+				</div>
 			</fieldset>
-	</div>
+			</div>
 	</section>
 {% endblock Contenido %}
