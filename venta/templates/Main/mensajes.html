@@ -10,11 +10,16 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="{% static "css/baseFIAofertas.css" %}"/>
-	<link rel="stylesheet" href="{% static "css/edicionPerfil.css" %}"/>
+	<link rel="stylesheet" href="{% static "css/mensajes.css" %}"/>
 	<style>
 		@font-face{
 			font-family: "Lobster-Regular";
 			src: url("{% static "fonts/Lobster-Regular.ttf" %}") format("truetype");
+		}
+
+		@font-face{
+			font-family: "Righteous-Regular";
+			src: url("{% static 'fonts/Righteous-Regular.ttf'%}") format("truetype");
 		}
 	</style>
 </head>
@@ -29,7 +34,7 @@
 			    </div>
 			    <div class="collapse navbar-collapse" id="myNavbar">
 			      <ul class="nav navbar-nav navbar-right">
-			        <li><a href="/">FiaOfertas: Foro</a></li>
+			        <li><a href="/">Foro</a></li>
 			        <li><a href="/perfil">Perfil</a></li>
 			        <li><a href="/misventas">Mis Ventas</a></li>
 			        <li><a href="/nuevoProducto">Nueva Venta</a></li>
@@ -49,7 +54,7 @@
 			    </div>
 			    <div class="collapse navbar-collapse" id="myNavbar">
 			      <ul class="nav navbar-nav navbar-right">
-			        <li><a href="/">FiaOfertas:Foro</a></li>
+			        <li><a href="/">Foro</a></li>
 			        <li><a href="/perfil">Perfil</a></li>
 			        <li><a href="/login">Iniciar sesión</a></li>
 			        <li><a href="/registrarse">Registrarse</a></li>
@@ -64,17 +69,20 @@
    		<!-- Imagen -->
    		{% if user.is_authenticated %}
    			<h1>Mensajes:</h1>
-   			<label>Hola: {{user.username}}, tus mensajes son: </label>
-   			<legend><i class="glyphicon glyphicon-user"></i> Mensajes</legend>
+   			<h3>¡Hola!: <b>{{user.username}}</b>, tus mensajes son: </h3>
+   			<legend><i class="glyphicon glyphicon-envelope"></i> Mensajes</legend>
+   			<div class="col-sm-3 col-md-3">
+					<img src="{% static "imagenes/fiaOfertasLogo.png" %}" alt="" class="img-rounded img-responsive" height="250px" width="250px" />
+			</div>
    			{% for message in user.mensaje_set.all %}
    			<fieldset>
-				  	<div>
-				  		<p> <label> {{message.emisor}}: {{message.texto}} </label> 
-				  		</p>
-				  	</div>
+   				<div class="col-sm-10 col-md-10 content">
+				  		<p><b>{{message.emisor}}:</b> {{message.texto}} </p>
+				</div>
+				<hr />
 			</fieldset>
    			{% endfor %}
-   			</section>
+   	</section>
 	   	{% else %}
     	    <div class="col-sm-2 col-md-2">
         	    <img src="{% static "imagenes/user.png" %}" alt="" class="img-rounded img-responsive" />

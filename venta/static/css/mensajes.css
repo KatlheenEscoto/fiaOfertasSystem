@@ -1,0 +1,32 @@
+h1{
+	font-family: 'Lobster-Regular',cursive;
+	background-color: rgba(0,0,0,0.7);
+	text-align: center;
+	color: #fff;
+}
+
+a, a:hover{
+	font-weight: bold;
+	color:rgb(121, 224, 224);
+}
+
+legend{
+	font-family: 'Righteous-Regular',cursive;
+    color:#4FA9B1;
+}
+
+h3{
+	font-family: 'Righteous-Regular';
+	text-align: center;
+	font-size: 20px;
+}
+
+.content{
+	overflow: auto;
+    border-style: dashed;
+    border-width: 1px;
+    background-color: #fff;
+    border-radius: 10px;
+	/*height: 330px;*/
+
+}

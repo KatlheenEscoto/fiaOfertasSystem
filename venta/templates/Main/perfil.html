@@ -95,11 +95,11 @@
    			{% for vendedor in user.vendedor_set.all %}
    				{% if vendedor.image %}
    					<div class="col-sm-3 col-md-3">
-   						<img src="{{vendedor.image.url}}" alt="no se puede mostrar imagen" class="img-rounded img-responsive" />
+   						<img src="{{vendedor.image.url}}" alt="no se puede mostrar imagen" class="img-rounded img-responsive image" />
    					</div>
    				{% else %}
    					<div class="col-sm-3 col-md-3">
-   						<img src="{% static "imagenes/user.png" %}" alt="" class="img-rounded img-responsive" />
+   						<img src="{% static "imagenes/user.png" %}" alt="" class="img-rounded img-responsive image" />
    					</div>
    				{% endif %}
 
@@ -174,7 +174,7 @@
 			</fieldset>
 			<br />
 			<fieldset>
-			  	<legend><i class="glyphicon glyphicon-user"></i> Modificar Contrasenia:</legend>
+			  	<legend><i class="glyphicon glyphicon-user"></i> Modificar Contraseña:</legend>
 			  	<form class="form-inline" action="{% url 'venta:editar_contra' user.id %}" method="post">
 			  	{% csrf_token %}
 			  	<h4 class="text-center"><em>{{ valor }}</em></h4>
@@ -204,7 +204,7 @@
 			</div>	
 
     	    <div class="col-sm-2 col-md-2">
-        	    <img src="{% static "imagenes/user.png" %}" alt="" class="img-rounded img-responsive" />
+        	    <img src="{% static "imagenes/user.png" %}" alt="" class="img-rounded img-responsive image" />
         	</div>
 
         	<div class="col-sm-4 col-md-4 rejilla">
