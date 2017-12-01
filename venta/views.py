@@ -226,9 +226,13 @@ def eliminarUtilidad(request):
 def EliminarUsuario(request,user_id):
 	usuarioE = get_object_or_404(User,pk= user_id)
 	try:
+		template = loader.get_template('Main/index.html')
+		usuario= request.user
 		usuarioE.delete()
-		return render_to_response('Main/index.html',{'mensaje':'objeto eliminado con exito'})
-	except (KeyError, venta.DoesNotExist):
+		context={}
+		login(request,usuario)
+		return redirect('/')
+	except (KeyError, usuarioE.DoesNotExist):
 		return render(request, 'Main/404.html', {
 		    	'error_message': "No selecciono una venta valida a eliminar",
 		})
@@ -248,7 +252,7 @@ def editar(request, perfil_id):
 			context={'email':email, 'cel':cel, 'perfil':perfil, perfil_id:'perfil_id', 'newid':newId}
 
 			#return render_to_response('Main/Perfil.html',context)
-			return redirect('venta:editar')	
+			return redirect('venta:perfil')	
 		else :
 			context={'perfil':perfil}
 			return render_to_response('Main/editarPerfil.html',context)	
@@ -385,6 +389,7 @@ def nuevoProducto(request):
 def eliminarVenta(request, venta_id):
 	venta = get_object_or_404(Producto,pk=venta_id)
 	try:
+		usuari = request.user
 		util = Utilidad()
 		util.nombre = venta.nombre
 		util.saldo = venta.precio
@@ -393,7 +398,8 @@ def eliminarVenta(request, venta_id):
 		util.user=venta.vendedor
 		util.save()
 		venta.delete()
-		return render_to_response('Main/index.html',{'mensaje':'objeto eliminado con exito','saldo':util.saldo, 'nombre':util.nombre})
+		login(request,usuari)
+		return redirect('/')
 	except (KeyError, venta.DoesNotExist):
 		return render(request, 'Main/404.html', {
 		    	'error_message': "No selecciono una venta valida a eliminar",

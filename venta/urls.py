@@ -19,7 +19,7 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^login/$', views.auth_login,name="authentication"),
     url(r'^registrarse/$', views.auth_signup,name="authentication"),
-    url(r'^logout$',auth_views.logout, {'next_page':'/'}, name='logout'),
+    url(r'^logout/$',auth_views.logout, {'next_page':'/'}, name='logout'),
     url(r'^$', views.index),
 	url(r'^perfil/', views.perfil,name='perfil'),
     url(r'^mensajes/', views.ver_mensajes),

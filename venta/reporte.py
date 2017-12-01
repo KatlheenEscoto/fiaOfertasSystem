@@ -9,7 +9,7 @@ from reportlab.lib.enums import TA_CENTER
 from django.http import HttpResponse
 from datetime import time, date
 from django.conf import settings
-
+from reportlab.platypus import Image
 
 def generar_reporte(request, usuario):
 	#Creando la cabecera HTTPResponse con PDF.
@@ -23,6 +23,7 @@ def generar_reporte(request, usuario):
 
 	#Cabecera
 	cabecera(c)
+
 	c.setLineWidth(.3)
 	c.setFont('Helvetica',25)
 	c.drawString(30,750,'FIAOfertas')
@@ -100,10 +101,7 @@ def generar_reporte(request, usuario):
 	return response
 
 def cabecera(pdf):
-	imagen = settings.MEDIA_ROOT+'/fiaOfertasLogo.PNG'
-	pdf.drawImage(imagen,40,750,120,90, preserveAspectRatio=True)
-
-
-
-
+	imagen = settings.MEDIA_ROOT+'/fiaOfertasLogo.png'
+	#imagen = settings.STATIC_URL+'imagenes/fiaOfertasLogo.png'
+	pdf.drawImage(imagen, 40,750,120,90, preserveAspectRatio=True)
 

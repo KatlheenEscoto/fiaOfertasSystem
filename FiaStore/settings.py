@@ -24,7 +24,7 @@ SECRET_KEY = '-rm%ugypd+dtj2g#8d7oem5qj&#_%*&goaa@rzl-izw$si7tg+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True #cuando se publique poner aqui false
-#ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*']
 #TEMPLATE_DEBUG = DEBUG
 
 
@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'FiaStore.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-
+"""
 DATABASES = {
     'default': {
       'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -88,8 +88,8 @@ DATABASES = {
         'PORT': 5432,
     }
 }
-
 """
+
 
 DATABASES = {
     'default': {
@@ -97,7 +97,7 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-"""
+
 
 
 # Password validation
@@ -139,6 +139,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIR = (os.path.join(BASE_DIR,'static'),)
 
-MEDIA_ROOT='/media/'
+#MEDIA_ROOT='/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL='/media/'
 

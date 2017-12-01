@@ -92,6 +92,7 @@
 					</thead>
 				<tbody>
 					{% for pr in usuarios %}
+						<tr>
 							<th>{{pr.username}}</th>
 						{% for es in pr.vendedor_set.all %}
 					        <th>{{es.nombre}}</th>
@@ -107,6 +108,7 @@
 				        		<th>No hay necesidad de borrar este usuario</th>
 				        	{% endif %}
 				        {% endfor %}
+				    </tr>
 				    {% endfor %}
 				</tbody>
 			</table>
